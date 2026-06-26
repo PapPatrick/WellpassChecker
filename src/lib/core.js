@@ -1,17 +1,36 @@
 export const GERMAN_MONTHS = {
   januar: 0,
+  jan: 0,
+  february: 1,
   februar: 1,
+  feb: 1,
   "m\u00e4rz": 2,
   maerz: 2,
+  march: 2,
+  mar: 2,
   april: 3,
+  apr: 3,
   mai: 4,
+  may: 4,
   juni: 5,
+  june: 5,
+  jun: 5,
   juli: 6,
+  july: 6,
+  jul: 6,
   august: 7,
+  aug: 7,
   september: 8,
+  sept: 8,
+  sep: 8,
   oktober: 9,
+  october: 9,
+  oct: 9,
   november: 10,
+  nov: 10,
   dezember: 11,
+  december: 11,
+  dec: 11,
 };
 
 export const DEFAULT_VISIT_PRICE = 11;
@@ -155,15 +174,28 @@ export function parseCSV(text) {
 }
 
 export function parseGermanDate(dateStr) {
-  const cleaned = String(dateStr || "").replace(/"/g, "").trim();
+  const cleaned = String(dateStr || "")
+    .replace(/"/g, "")
+    .replace(/,/g, "")
+    .trim();
   const parts = cleaned.split(/\s+/);
   if (parts.length < 3) return null;
 
-  const dayToken = parts[0].replace(/\.$/, "");
-  const day = parseInt(dayToken, 10);
-  const monthName = parts[1].toLowerCase();
-  const year = parseInt(parts[2], 10);
-  const month = GERMAN_MONTHS[monthName];
+  const toDay = (token) => parseInt(String(token || "").replace(/\.$/, ""), 10);
+  const toYear = (token) => parseInt(token, 10);
+  const getMonth = (token) => GERMAN_MONTHS[String(token || "").toLowerCase()];
+
+  // Most exports: "21 June 2026" or "21 Juni 2026"
+  let day = toDay(parts[0]);
+  let month = getMonth(parts[1]);
+  let year = toYear(parts[2]);
+
+  // Fallback for common US-style strings like "June 21 2026"
+  if (month === undefined || isNaN(day)) {
+    day = toDay(parts[1]);
+    month = getMonth(parts[0]);
+    year = toYear(parts[2]);
+  }
 
   if (isNaN(day) || month === undefined || isNaN(year)) return null;
   return new Date(year, month, day);

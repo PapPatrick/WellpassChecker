@@ -47,8 +47,10 @@ function processCSV(text) {
   if (rows.length < 2) throw new Error("Die CSV-Datei enthält keine Daten.");
 
   const header = rows[0].map((h) => h.toLowerCase().replace(/"/g, ""));
-  const dateIdx = header.findIndex((h) => h.includes("datum"));
-  const facilityIdx = header.findIndex((h) => h.includes("einrichtung") || h.includes("name"));
+  const dateIdx = header.findIndex((h) => h.includes("datum") || h.includes("date"));
+  const facilityIdx = header.findIndex(
+    (h) => h.includes("einrichtung") || h.includes("facility") || h.includes("name")
+  );
 
   if (dateIdx === -1 || facilityIdx === -1) {
     throw new Error("Unerwartetes CSV-Format. Erwartet: Datum, Name der Einrichtung, …");

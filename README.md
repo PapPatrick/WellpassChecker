@@ -10,6 +10,12 @@ Die Verarbeitung laeuft lokal im Browser, es werden keine Daten hochgeladen.
 - Check-ins je Einrichtung mit anpassbaren Tageskartenpreisen
 - Monatlicher Verlauf (auch ueber mehrere Jahre)
 
+## Sprachunterstuetzung
+
+- Unterstuetzt werden aktuell CSV-Exporte auf Deutsch und Englisch.
+- Andere Sprachen sind derzeit nicht unterstuetzt.
+- Wenn dein Export in einer anderen Sprache ist, stelle die App-Sprache vor dem Export auf Deutsch oder Englisch um.
+
 ## Quickstart: CSV aus der Wellpass App exportieren
 
 1. Wellpass App oeffnen.

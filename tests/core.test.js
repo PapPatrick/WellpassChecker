@@ -39,6 +39,19 @@ test("parseGermanDate parses umlaut, fallback spellings, and dotted day tokens",
   assert.equal(dateC.getDate(), 7);
 });
 
+test("parseGermanDate parses English month names and alternate order", () => {
+  const dateA = parseGermanDate("21 June 2026");
+  const dateB = parseGermanDate("June 25 2026");
+
+  assert.ok(dateA instanceof Date);
+  assert.ok(dateB instanceof Date);
+  assert.equal(dateA.getFullYear(), 2026);
+  assert.equal(dateA.getMonth(), 5);
+  assert.equal(dateA.getDate(), 21);
+  assert.equal(dateB.getMonth(), 5);
+  assert.equal(dateB.getDate(), 25);
+});
+
 test("guessVisitPrice matches category rules", () => {
   assert.equal(guessVisitPrice("Alpen Therme Wellness Resort"), 24);
   assert.equal(guessVisitPrice("Super Sauna Resort"), 18);
@@ -100,4 +113,19 @@ test("analyzeCheckins handles inverted date range defensively", () => {
 
 test("escapeHtml safely escapes dangerous characters", () => {
   assert.equal(escapeHtml('<span data-ref="#">Tom & Jerry</span>'), "&lt;span data-ref=&quot;#&quot;&gt;Tom &amp; Jerry&lt;/span&gt;");
+});
+
+test("English export rows can be parsed into valid date/facility pairs", () => {
+  const csv =
+    'Date,Time,"Facility name",Address\n"21 June 2026",11:15:13,"Greifbar Friedrichshafen","Anton-Sommer-Stra\u00dfe 8"\n';
+  const rows = parseCSV(csv);
+  const header = rows[0].map((h) => h.toLowerCase().replace(/"/g, ""));
+  const dateIdx = header.findIndex((h) => h.includes("date"));
+  const facilityIdx = header.findIndex((h) => h.includes("facility") || h.includes("name"));
+
+  const date = parseGermanDate(rows[1][dateIdx]);
+  const facility = rows[1][facilityIdx];
+
+  assert.ok(date instanceof Date);
+  assert.equal(facility, "Greifbar Friedrichshafen");
 });
