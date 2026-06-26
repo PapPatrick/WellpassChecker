@@ -33,7 +33,6 @@ jobs:
           path: |
             index.html
             src
-            .nojekyll
 
       - name: Deploy to GitHub Pages
         id: deployment
