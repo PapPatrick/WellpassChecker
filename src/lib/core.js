@@ -14,15 +14,23 @@ export const GERMAN_MONTHS = {
   dezember: 11,
 };
 
-export const DEFAULT_VISIT_PRICE = 12;
+export const DEFAULT_VISIT_PRICE = 11;
 
 export const VISIT_PRICE_RULES = [
-  { patterns: /spa|wellness|therm|sauna|resort/i, price: 22 },
-  { patterns: /strand|freibad|outdoor|beach|open.?air/i, price: 6 },
-  { patterns: /bad|pool|schwimm|aqua|swim|hallen/i, price: 9 },
-  { patterns: /kletter|boulder|climb|bloc|wall/i, price: 14 },
-  { patterns: /yoga|pilates|dance|box|martial|functional|crossfit/i, price: 15 },
-  { patterns: /fitness|gym|sport|training|studio|center|centre/i, price: 12 },
+  // Premium wellness and thermal destinations.
+  { patterns: /therm|therme|thermal|day.?spa|wellness.?resort|spa.?resort/i, price: 24 },
+  { patterns: /sauna/i, price: 18 },
+
+  // Water-based facilities.
+  { patterns: /aquapark|water.?park|erlebnisbad/i, price: 14 },
+  { patterns: /strandbad|freibad|beach|open.?air|outdoor/i, price: 5 },
+  { patterns: /hallenbad|schwimm|swim|pool|bad|aqua/i, price: 7 },
+
+  // Sports and classes.
+  { patterns: /kletter|boulder|climb|bloc|wall/i, price: 13 },
+  { patterns: /tennis|squash|badminton|padel|golf/i, price: 16 },
+  { patterns: /yoga|pilates|dance|box|martial|functional|crossfit/i, price: 14 },
+  { patterns: /fitness|gym|sport|training|studio|center|centre/i, price: 11 },
 ];
 
 const assignedFacilityColors = new Map();

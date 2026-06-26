@@ -40,9 +40,10 @@ test("parseGermanDate parses umlaut, fallback spellings, and dotted day tokens",
 });
 
 test("guessVisitPrice matches category rules", () => {
-  assert.equal(guessVisitPrice("Super Sauna Resort"), 22);
-  assert.equal(guessVisitPrice("Climb Boulder Hall"), 14);
-  assert.equal(guessVisitPrice("Unbekannte Location"), 12);
+  assert.equal(guessVisitPrice("Alpen Therme Wellness Resort"), 24);
+  assert.equal(guessVisitPrice("Super Sauna Resort"), 18);
+  assert.equal(guessVisitPrice("Climb Boulder Hall"), 13);
+  assert.equal(guessVisitPrice("Unbekannte Location"), 11);
 });
 
 test("monthsBetween includes both start and end month", () => {
